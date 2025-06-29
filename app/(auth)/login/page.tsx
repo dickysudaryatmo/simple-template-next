@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { signIn } from 'next-auth/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -15,23 +15,26 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const registered = searchParams.get('registered')
 
-  // Safely get callbackUrl and validate it
-  const callbackUrl = searchParams.get('callbackUrl')
-  let safeCallbackUrl = '/dashboard' // Default fallback
-  
-  try {
+  const [safeCallbackUrl, setSafeCallbackUrl] = useState('/dashboard')
+
+  useEffect(() => {
+    const callbackUrl = searchParams.get('callbackUrl')
+    let url = '/dashboard'
+    
     if (callbackUrl) {
-      const decodedUrl = decodeURIComponent(callbackUrl)
-      const url = new URL(decodedUrl, window.location.origin)
-      
-      // Only allow callback URLs that don't point back to auth pages
-      if (!['/login', '/register'].includes(url.pathname)) {
-        safeCallbackUrl = decodedUrl
+      try {
+        // Simple path validation without URL parsing
+        const decodedUrl = decodeURIComponent(callbackUrl)
+        if (!decodedUrl.startsWith('/login') && !decodedUrl.startsWith('/register')) {
+          url = decodedUrl
+        }
+      } catch (e) {
+        console.error('Invalid callback URL', e)
       }
     }
-  } catch (e) {
-    console.error('Invalid callback URL', e)
-  }
+    
+    setSafeCallbackUrl(url)
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
