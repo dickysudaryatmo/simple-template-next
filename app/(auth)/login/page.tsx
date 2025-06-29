@@ -15,19 +15,38 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const registered = searchParams.get('registered')
 
+  // Safely get callbackUrl and validate it
+  const callbackUrl = searchParams.get('callbackUrl')
+  let safeCallbackUrl = '/dashboard' // Default fallback
+  
+  try {
+    if (callbackUrl) {
+      const decodedUrl = decodeURIComponent(callbackUrl)
+      const url = new URL(decodedUrl, window.location.origin)
+      
+      // Only allow callback URLs that don't point back to auth pages
+      if (!['/login', '/register'].includes(url.pathname)) {
+        safeCallbackUrl = decodedUrl
+      }
+    }
+  } catch (e) {
+    console.error('Invalid callback URL', e)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     const result = await signIn('credentials', {
       redirect: false,
       email,
-      password
+      password,
+      callbackUrl: safeCallbackUrl
     })
 
     if (result?.error) {
-      setError('Invalid credentials')
+      setError(result.error)
     } else {
-      router.push('/dashboard')
+      router.push(safeCallbackUrl)
     }
   }
 

@@ -48,15 +48,31 @@ export const authOptions = {
         session.user.name = token.name as string
       }
       return session
+    },
+    async signOut() {
+      // Custom sign out logic if needed
+      return true
+    },
+    redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt"
   },
+//   pages: {
+//     signIn: '/login'
+//   }
   pages: {
-    signIn: '/login'
-  }
+    signIn: '/login',
+    error: '/error',
+    newUser: '/register'
+  },
 }
 
 export default NextAuth(authOptions)
