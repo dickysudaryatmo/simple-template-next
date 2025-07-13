@@ -62,13 +62,13 @@ FLUSH PRIVILEGES;
 ```bash
 npx prisma init
 ```
-    Run database migrations:
+3. Run database migrations:
 ```bash
 npx prisma migrate dev --name init
 # or for production:
 # npx prisma migrate deploy
 ```
-    Generate Prisma Client:
+4. Generate Prisma Client:
 ```bash
 npx prisma generate
 ```
