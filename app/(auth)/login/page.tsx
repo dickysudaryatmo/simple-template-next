@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { signIn } from 'next-auth/react'
 import { useState, useEffect } from 'react'
+import { LoadingOverlay } from '@/components/LoadingOverlay'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -16,6 +17,7 @@ export default function LoginPage() {
   const registered = searchParams.get('registered')
 
   const [safeCallbackUrl, setSafeCallbackUrl] = useState('/dashboard')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const callbackUrl = searchParams.get('callbackUrl')
@@ -38,41 +40,45 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+    setIsLoading(true)
+    setError('')
+
     const result = await signIn('credentials', {
       redirect: false,
       email,
       password,
       callbackUrl: safeCallbackUrl
     })
-
+    console.log(result);
+    
     if (result?.error) {
       setError(result.error)
+      setIsLoading(false)
     } else {
       router.push(safeCallbackUrl)
     }
   }
 
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-muted-foreground">
-              Enter your email below to login to your account
-            </p>
-          </div>
-          
-          {registered && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-              Registration successful! Please login.
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gray-50 dark:bg-gray-900">
+      {isLoading && <LoadingOverlay />}
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-200 dark:border-gray-700">
+          <div className="grid gap-6 text-center">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold">Login</h1>
+              <p className="text-muted-foreground">
+                Enter your email below to login to your account
+              </p>
             </div>
-          )}
-          
-          <form onSubmit={handleSubmit}>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
+            {registered && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                Registration successful! Please login.
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -83,7 +89,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="grid gap-2">
+              <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input 
                   id="password" 
@@ -94,25 +100,19 @@ export default function LoginPage() {
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full cursor-pointer">
+                {isLoading ? 'Signing in...' : 'Login'}
               </Button>
+            </form>
+            
+            <div className="text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <a href="/register" className="underline hover:text-primary">
+                Sign up
+              </a>
             </div>
-          </form>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <a href="/register" className="underline">
-              Sign up
-            </a>
           </div>
         </div>
-      </div>
-      <div className="hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
-          alt="Login Image"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
       </div>
     </div>
   )

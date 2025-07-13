@@ -31,6 +31,9 @@ import {
 } from "@/components/ui/sidebar"
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import { LoadingOverlay } from '@/components/LoadingOverlay'
+import { useState, useEffect } from 'react'
 
 export function NavUser({
   user,
@@ -43,6 +46,8 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
+  const { data: session } = useSession()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogout = async () => {
     try {
@@ -50,7 +55,7 @@ export function NavUser({
       await signOut({ redirect: false })
       
       // Then call your API route if needed
-      await fetch('/api/auth/logout', { method: 'POST' })
+      // await fetch('/api/auth/logout', { method: 'POST' })
       
       // Redirect to login page
       router.push('/login')
@@ -61,8 +66,14 @@ export function NavUser({
       window.location.href = '/login'
     }
   }
-  return (
+    // Jika tidak ada session, kembalikan null
+  if (!session?.user) {
+    return null
+  }
+
+  return (    
     <SidebarMenu>
+      {isLoading && <LoadingOverlay />}
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -75,8 +86,8 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">{session.user.name}</span>
+                <span className="truncate text-xs">{session.user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -94,8 +105,8 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{session.user.name}</span>
+                  <span className="truncate text-xs">{session.user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

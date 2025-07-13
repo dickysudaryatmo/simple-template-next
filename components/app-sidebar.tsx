@@ -12,6 +12,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  CalendarCheck,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -31,13 +32,13 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "avatar_gamer.png",
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: "Event Horizon",
+      logo: CalendarCheck,
+      plan: "",
     },
     {
       name: "Acme Corp.",

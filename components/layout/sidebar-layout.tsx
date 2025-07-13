@@ -9,7 +9,7 @@ export default function SidebarLayout({
   return(
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="w-full">
         <SidebarTrigger />
         {children}
       </main>
