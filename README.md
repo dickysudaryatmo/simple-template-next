@@ -85,8 +85,7 @@ pnpm dev
 
 ### Project Structure
 
-my-app/
-
+```
 ├── app/                # App router (Next.js 15+)
 │   ├── (auth)/         # Page for auth
 │   ├── api/            # Route API
@@ -97,3 +96,4 @@ my-app/
 ├── .eslintrc.json   # ESLint config
 ├── next.config.js   # Next.js config
 └── package.json     # Dependencies
+```
