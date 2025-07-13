@@ -9,11 +9,11 @@
 
 ##  Features
 
-✅ Next.js 15 (App Router)
-✅ Prisma ORM
-✅ MySQL database
-✅ UI Shadcn/ui For NextJS (clean & customizable)
-✅ Auth NextAuth.js (Credentials)
+- Next.js 15 (App Router)
+- Prisma ORM
+- MySQL database
+- UI Shadcn/ui For NextJS (clean & customizable)
+- Auth NextAuth.js (Credentials)
 
 ### 📦 Prerequisites
 
