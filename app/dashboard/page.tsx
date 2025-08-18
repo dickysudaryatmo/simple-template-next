@@ -5,18 +5,18 @@ import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 export default async function DashboardPage() {
-
+// const { data: session } = useSession()
 const session = await getServerSession(authOptions)
   if (!session) {
     redirect('/login')
   }
-
+  console.log(session)
   return (
     <div>
       <SidebarLayout>
         <div className="relative flex w-full flex-1 flex-col">
-          <div className="flex-1 p-4 md:p-6">
-            <header className="flex items-center h-14 px-4 border-b">
+          <div className="flex-1 p-2 md:p-4">
+            <header className="flex items-center h-10 px-4 border-b">
               <h1 className="text-lg font-semibold">Dashboard</h1>
             </header>
             <main className="py-4">

@@ -13,6 +13,8 @@ import {
   Settings2,
   SquareTerminal,
   CalendarCheck,
+  Cookie,
+  List 
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -36,8 +38,8 @@ const data = {
   },
   teams: [
     {
-      name: "Event Horizon",
-      logo: CalendarCheck,
+      name: "ERP Asri Kue",
+      logo: Cookie,
       plan: "",
     },
     {
@@ -52,91 +54,101 @@ const data = {
     },
   ],
   navMain: [
+    // {
+    //   title: "Playground",
+    //   url: "#",
+    //   icon: SquareTerminal,
+    //   isActive: true,
+    //   items: [
+    //     {
+    //       title: "History",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Starred",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Settings",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
     {
-      title: "Playground",
+      title: "Master",
       url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      icon: List,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Satuan",
+          url: "/master/satuan",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Bahan Baku",
+          url: "/master/bahan-baku",
         },
         {
-          title: "Settings",
-          url: "#",
+          title: "Task",
+          url: "/tasks",
+        },
+        {
+          title: "Post",
+          url: "/posts",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Booking",
       url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      icon: List,
     },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+
+    // {
+    //   title: "Documentation",
+    //   url: "#",
+    //   icon: BookOpen,
+    //   items: [
+    //     {
+    //       title: "Introduction",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Get Started",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Tutorials",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Changelog",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Settings",
+    //   url: "#",
+    //   icon: Settings2,
+    //   items: [
+    //     {
+    //       title: "General",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Team",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Billing",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Limits",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
   ],
   projects: [
     {

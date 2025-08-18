@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from '@/lib/prisma'
 import { compare } from 'bcrypt'
+import { generateAccessToken } from "@/lib/jwt"
 
 export const authOptions = {
   providers: [
@@ -39,6 +40,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id
         token.name = user.name
+        token.accessToken = generateAccessToken(user) // 👈 custom token
       }
       return token
     },
@@ -46,6 +48,7 @@ export const authOptions = {
       if (token) {
         session.user.id = token.id as string
         session.user.name = token.name as string
+        session.user.accessToken = token.accessToken // 👈 custom token
       }
       return session
     },

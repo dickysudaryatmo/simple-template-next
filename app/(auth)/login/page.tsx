@@ -7,13 +7,14 @@ import { Label } from '@/components/ui/label'
 import { signIn } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { LoadingOverlay } from '@/components/LoadingOverlay'
+import { toast } from 'sonner'
 
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  // const [error, setError] = useState('')
   const registered = searchParams.get('registered')
 
   const [safeCallbackUrl, setSafeCallbackUrl] = useState('/dashboard')
@@ -41,7 +42,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError('')
+    // setError('')
 
     const result = await signIn('credentials', {
       redirect: false,
@@ -52,7 +53,8 @@ export default function LoginPage() {
     console.log(result);
     
     if (result?.error) {
-      setError(result.error)
+      // setError(result.error)
+      toast.error('Error ' + result.error);
       setIsLoading(false)
     } else {
       router.push(safeCallbackUrl)
@@ -71,11 +73,11 @@ export default function LoginPage() {
                 Enter your email below to login to your account
               </p>
             </div>
-            {registered && (
+            {/* {registered && (
               <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                 Registration successful! Please login.
               </div>
-            )}
+            )} */}
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -99,7 +101,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
               <Button type="submit" className="w-full cursor-pointer">
                 {isLoading ? 'Signing in...' : 'Login'}
               </Button>

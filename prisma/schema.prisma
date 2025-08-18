@@ -10,8 +10,17 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(100)
-  email     String   @unique @db.VarChar(255)
-  password  String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(150)
+  password  String   @db.VarChar(150)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model MasterSatuan {
+  kodeSatuan  String    @id
+  namaSatuan String @db.VarChar(150)
+  status    String @default("1")
+}
+// after add model, run command npx prisma migrate dev --name init-mastersatuan-table
+
+// utk running all table pakai npx prisma migrate dev --name init

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import Link from 'next/link'
 import { LoadingOverlay } from '@/components/LoadingOverlay'
+import { toast } from 'sonner'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -41,11 +42,13 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Registration failed')
       }
 
-      setSuccessMessage(true)
+      // setSuccessMessage(true)
+      toast.success('Registration successful! Please login.');
       // Redirect ke login setelah registrasi berhasil
       router.push('/login?registered=true')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed')
+      // setError(err instanceof Error ? err.message : 'Registration failed')
+      toast.error('Error: ' + (err instanceof Error ? err.message : 'Registration failed'));
     } finally {
       setIsLoading(false)
     }
@@ -64,11 +67,11 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            {successMessage && (
+            {/* {successMessage && (
               <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                 {successMessage}
               </div>
-            )}
+            )} */}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -106,7 +109,7 @@ export default function RegisterPage() {
                 />
               </div>
 
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 
               <Button 
                 type="submit" 

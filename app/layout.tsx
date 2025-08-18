@@ -27,6 +27,7 @@ import './globals.css'
 import { Providers } from './provider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.className}>
         <Providers session={session}>
           {children}
+          <Toaster position="top-right" />
         </Providers>
       </body>
     </html>
